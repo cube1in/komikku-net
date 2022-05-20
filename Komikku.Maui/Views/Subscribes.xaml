@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Komikku.Maui.Views.Subscribes"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Komikku.Maui.ValueConverters"
+             xmlns:viewModels="clr-namespace:Komikku.Maui.ViewModels"
+             Title="订阅"
+             x:DataType="viewModels:SubscribesViewModel">
+    <Grid>
+
+        <StackLayout IsVisible="{Binding IsLogout}">
+            <Label HorizontalOptions="CenterAndExpand"
+                   Text="请先登录！"
+                   VerticalOptions="CenterAndExpand" />
+        </StackLayout>
+
+        <!--  开始: 主内容  -->
+        <Grid IsVisible="{Binding IsLogin}">
+
+            <!--  活动指示器  -->
+            <ActivityIndicator HorizontalOptions="Center"
+                               IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               VerticalOptions="Center"
+                               Color="Orange" />
+
+            <!--  下拉刷新  -->
+            <RefreshView Command="{Binding RefreshCommand}"
+                         IsRefreshing="{Binding IsRefreshing}"
+                         RefreshColor="Orange">
+
+                <!--  列表  -->
+                <CollectionView Margin="10,20"
+                                IsVisible="{Binding IsLoaded}"
+                                ItemSizingStrategy="MeasureFirstItem"
+                                ItemsSource="{Binding MangaForDisplayList}"
+                                SelectionMode="None"
+                                VerticalOptions="Start">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="20" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="viewModels:MangaForDisplay">
+                            <Frame Padding="0" CornerRadius="2">
+                                <!--  手势识别器  -->
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:SubscribeViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+
+                                <Grid ColumnDefinitions="auto, *">
+
+                                    <Image Grid.Column="0"
+                                           Aspect="AspectFill"
+                                           HeightRequest="120"
+                                           Source="{Binding Cover}"
+                                           WidthRequest="90" />
+
+                                    <Grid Grid.Column="1"
+                                          Margin="10"
+                                          RowDefinitions="*, auto">
+                                        <VerticalStackLayout Grid.Row="0" VerticalOptions="Start">
+                                            <Label FontSize="Body"
+                                                   LineBreakMode="TailTruncation"
+                                                   Text="{Binding Title}"
+                                                   TextColor="Black" />
+
+                                            <Label FontSize="Small"
+                                                   LineBreakMode="TailTruncation"
+                                                   Text="{Binding Status}"
+                                                   TextColor="DimGray" />
+
+                                            <Label FontSize="Small"
+                                                   LineBreakMode="TailTruncation"
+                                                   Text="{Binding ScanlationGroup}"
+                                                   TextColor="DimGray" />
+                                        </VerticalStackLayout>
+
+                                        <Grid Grid.Row="1" ColumnDefinitions="*, auto">
+                                            <Label Grid.Column="0"
+                                                   FontSize="Small"
+                                                   LineBreakMode="TailTruncation"
+                                                   Text="{Binding Chapter}"
+                                                   TextColor="DimGray" />
+
+                                            <Label Grid.Column="1"
+                                                   FontSize="Small"
+                                                   Text="{Binding ReadableAt, Converter={converters:DateTimeToSinceConverter}}"
+                                                   TextColor="DimGray" />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </Grid>
+        <!--  结束: 主内容  -->
+    </Grid>
+</ContentPage>

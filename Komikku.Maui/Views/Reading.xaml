@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Komikku.Maui.Views.Reading"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Komikku.Maui.ViewModels"
+             Title="阅读"
+             x:DataType="viewModels:ReadingViewModel">
+    <Grid>
+        <!--  活动指示器  -->
+        <ActivityIndicator HorizontalOptions="Center"
+                           IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"
+                           VerticalOptions="Center"
+                           Color="Orange" />
+
+        <CollectionView HorizontalOptions="Center"
+                        IsVisible="{Binding IsLoaded}"
+                        ItemSizingStrategy="MeasureAllItems"
+                        ItemsSource="{Binding ImageList}"
+                        SelectionMode="None"
+                        VerticalOptions="Start">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" SnapPointsAlignment="Start" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,0,0,10"
+                           Padding="0"
+                           BorderColor="Transparent"
+                           CornerRadius="0">
+                        <Image Source="{Binding}" />
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </Grid>
+</ContentPage>

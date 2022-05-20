@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Komikku.Maui.Views.Login"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Komikku.Maui.ViewModels"
+             Title="登录"
+             x:DataType="viewModels:LoginViewModel">
+
+    <VerticalStackLayout HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         WidthRequest="300">
+
+        <!--  用户名  -->
+        <Entry ClearButtonVisibility="WhileEditing"
+               MaxLength="64"
+               Placeholder="用户名"
+               Text="{Binding Username}" />
+
+        <!--  邮箱  -->
+        <Entry ClearButtonVisibility="WhileEditing"
+               Keyboard="Email"
+               Placeholder="邮箱"
+               Text="{Binding Email}" />
+
+        <!--  密码  -->
+        <Entry ClearButtonVisibility="WhileEditing"
+               IsPassword="True"
+               MaxLength="1024"
+               Placeholder="密码"
+               Text="{Binding Password}" />
+
+
+        <!--  登录按钮  -->
+        <Button Margin="0,30,0,0"
+                Command="{Binding LoginCommand}"
+                Text="登录" />
+    </VerticalStackLayout>
+</ContentPage>

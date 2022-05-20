@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="Komikku.Maui.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:Komikku.Maui"
+       xmlns:viewModels="clr-namespace:Komikku.Maui.ViewModels"
+       xmlns:views="clr-namespace:Komikku.Maui.Views"
+       x:DataType="viewModels:ShellViewModel"
+       Shell.FlyoutBehavior="Disabled">
+    <TabBar>
+        <ShellContent Title="{Binding LatestUpdate.Title}"
+                      ContentTemplate="{DataTemplate views:LatestUpdate}"
+                      Icon="{Binding LatestUpdate.Icon}" />
+
+        <ShellContent Title="{Binding Subscribes.Title}"
+                      ContentTemplate="{DataTemplate views:Subscribes}"
+                      Icon="{Binding Subscribes.Icon}" />
+
+        <ShellContent Title="{Binding Me.Title}"
+                      ContentTemplate="{DataTemplate views:Me}"
+                      Icon="{Binding Me.Icon}" />
+    </TabBar>
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.ForegroundColor" Value="White" />
+                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95000000}" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Dark={StaticResource DarkBackground}, Light={StaticResource LightBackground}}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Dark={StaticResource LightBackground}, Light={StaticResource DarkBackground}}" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95000000}" />
+                <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Dark={StaticResource LightBackground}, Light={StaticResource DarkBackground}}" />
+            </Style>
+            <Style ApplyToDerivedTypes="True"
+                   BasedOn="{StaticResource BaseStyle}"
+                   TargetType="ShellItem" />
+        </ResourceDictionary>
+    </Shell.Resources>
+</Shell>

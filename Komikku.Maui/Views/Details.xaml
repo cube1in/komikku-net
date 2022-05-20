@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Komikku.Maui.Views.Details"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Komikku.Maui.Controls"
+             xmlns:converters="clr-namespace:Komikku.Maui.ValueConverters"
+             xmlns:viewModels="clr-namespace:Komikku.Maui.ViewModels"
+             Title="详情"
+             x:DataType="viewModels:DetailsViewModel">
+
+    <Grid>
+        <!--  活动指示器  -->
+        <ActivityIndicator HorizontalOptions="Center"
+                           IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"
+                           VerticalOptions="Center"
+                           Color="Orange" />
+
+        <!--  开始: 主内容  -->
+        <Grid IsVisible="{Binding IsLoaded}" RowDefinitions="*, auto, 2.5*">
+
+            <!--  开始: 顶部背景图片  -->
+            <Frame Padding="0">
+                <Image Aspect="AspectFill"
+                       HorizontalOptions="Fill"
+                       Source="{Binding MangaForDisplay.Background}"
+                       VerticalOptions="Fill" />
+            </Frame>
+            <!--  结束: 顶部背景图片  -->
+
+            <!--  开始: 标题&订阅  -->
+            <VerticalStackLayout Grid.Row="1"
+                                 Margin="15,15,15,0"
+                                 HorizontalOptions="Start"
+                                 VerticalOptions="Start">
+
+                <!--  标题&订阅  -->
+                <Grid ColumnDefinitions="*, auto">
+                    <!--  标题  -->
+                    <Label FontSize="Large"
+                           LineBreakMode="WordWrap"
+                           Text="{Binding MangaForDisplay.Title}"
+                           TextColor="Black" />
+
+                    <!--  订阅按钮  -->
+                    <Button Grid.Column="1"
+                            BackgroundColor="Orange"
+                            Command="{Binding SubscribeCommand}"
+                            FontAttributes="Bold"
+                            FontSize="Caption"
+                            IsEnabled="{Binding SubscribeButtonText, Converter={converters:SubscribeButtonTextToIsAuthenticatedCoverter}}"
+                            Text="{Binding SubscribeButtonText}"
+                            VerticalOptions="Start" />
+                </Grid>
+            </VerticalStackLayout>
+            <!--  结束: 标题&订阅  -->
+
+            <!--  开始: 滚动栏  -->
+            <ScrollView Grid.Row="2" Margin="15">
+                <!--  开始: 标签&连载情况&作者&简介&章节目录  -->
+                <VerticalStackLayout>
+
+                    <!--  标签  -->
+                    <CollectionView Margin="0,0,0,8"
+                                    HorizontalOptions="Start"
+                                    ItemsSource="{Binding MangaForDisplay.Tags}"
+                                    SelectionMode="None">
+
+                        <!--  Item layout  -->
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="5" Orientation="Horizontal" />
+                        </CollectionView.ItemsLayout>
+
+                        <!--  Item template  -->
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <controls:FlatTag Text="{Binding}" />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!--  连载情况  -->
+                    <Label Margin="0,0,0,8"
+                           FontSize="Caption"
+                           Text="{Binding MangaForDisplay.Status, StringFormat='连载情况：{0}'}"
+                           TextColor="Black" />
+
+                    <!--  作者  -->
+                    <Label Margin="0,0,0,8"
+                           FontSize="Caption"
+                           Text="{Binding MangaForDisplay.Author, StringFormat='作者：{0}'}"
+                           TextColor="Gray" />
+
+                    <!--  简介  -->
+                    <Grid Margin="0,0,0,25" ColumnDefinitions="auto, *">
+                        <Label FontSize="Caption"
+                               Text="简介："
+                               TextColor="Gray" />
+
+                        <Label Grid.Column="1"
+                               FontSize="Caption"
+                               LineBreakMode="WordWrap"
+                               Text="{Binding MangaForDisplay.Description}"
+                               TextColor="Gray" />
+                    </Grid>
+
+                    <!--  章节列表  -->
+                    <CollectionView HorizontalOptions="Center"
+                                    IsGrouped="True"
+                                    ItemsSource="{Binding ChapterGroupForDisplayList}"
+                                    SelectionMode="None"
+                                    VerticalOptions="Start">
+
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="viewModels:ChapterForDisplay">
+
+                                <Grid Margin="10"
+                                      ColumnDefinitions="*, *, *, auto"
+                                      HorizontalOptions="Center"
+                                      VerticalOptions="Center">
+
+                                    <!--  手势识别器  -->
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:DetailsViewModel}}, Path=GoToReadingCommand}" CommandParameter="{Binding Id}" />
+                                    </Grid.GestureRecognizers>
+
+                                    <Label Grid.Column="0" Text="{Binding Title}" />
+                                    <Label Grid.Column="1" Text="{Binding ScanlationGroup}" />
+                                    <Label Grid.Column="2" Text="{Binding Uploader}" />
+                                    <Label Grid.Column="3" Text="{Binding PublishAt, Converter={converters:DateTimeToSinceConverter}}" />
+
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+
+                        <!--  每个组的表头  -->
+                        <CollectionView.GroupHeaderTemplate>
+                            <DataTemplate x:DataType="viewModels:ChapterGroupForDisplay">
+                                <Label FontAttributes="Bold"
+                                       FontSize="Subtitle"
+                                       Text="{Binding Volume}"
+                                       TextColor="DimGray" />
+                            </DataTemplate>
+                        </CollectionView.GroupHeaderTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+                <!--  结束: 标签&连载情况&作者&简介&章节目录  -->
+            </ScrollView>
+            <!--  结束: 滚动栏  -->
+
+        </Grid>
+        <!--  结束: 主内容  -->
+    </Grid>
+</ContentPage>

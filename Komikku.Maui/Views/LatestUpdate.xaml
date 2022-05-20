@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Komikku.Maui.Views.LatestUpdate"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Komikku.Maui.ValueConverters"
+             xmlns:viewModels="clr-namespace:Komikku.Maui.ViewModels"
+             Title="最新更新"
+             x:DataType="viewModels:LatestUpdateViewModel">
+    <!--  开始: 主内容  -->
+    <Grid>
+
+        <!--  Timing carousel view  -->
+        <!--<controls:TimingCarouselView Interval="5" ItemsSource="{Binding Collection1}">
+
+            <controls:TimingCarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Image Aspect="AspectFill"
+                           HeightRequest="150"
+                           HorizontalOptions="Center"
+                           Source="{Binding}"
+                           WidthRequest="150" />
+                </DataTemplate>
+            </controls:TimingCarouselView.ItemTemplate>
+        </controls:TimingCarouselView>-->
+
+
+        <!--  活动指示器  -->
+        <ActivityIndicator HorizontalOptions="Center"
+                           IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"
+                           VerticalOptions="Center"
+                           Color="Orange" />
+
+        <!--  Drop refresh（this control has problem now）  -->
+        <!--  https://github.com/dotnet/maui/issues/5436  -->
+        <RefreshView Command="{Binding RefreshCommand}"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     RefreshColor="Orange">
+
+            <!--  列表  -->
+            <CollectionView Margin="30,20"
+                            IsVisible="{Binding IsLoaded}"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            ItemsSource="{Binding MangaForDisplayList}"
+                            RemainingItemsThreshold="{Binding RemainingItemsThreshold}"
+                            RemainingItemsThresholdReachedCommand="{Binding ThresholdReachedCommand}"
+                            SelectionMode="None"
+                            VerticalOptions="Start">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="20" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:MangaForDisplay">
+                        <Frame Padding="0" CornerRadius="2">
+                            <!--  手势识别器  -->
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:LatestUpdateViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                            <Grid ColumnDefinitions="auto, *">
+
+                                <Image Grid.Column="0"
+                                       Aspect="AspectFill"
+                                       HeightRequest="120"
+                                       Source="{Binding Cover}"
+                                       WidthRequest="90" />
+
+                                <Grid Grid.Column="1"
+                                      Margin="10"
+                                      RowDefinitions="*, auto">
+                                    <VerticalStackLayout Grid.Row="0" VerticalOptions="Start">
+                                        <Label FontSize="Body"
+                                               LineBreakMode="TailTruncation"
+                                               Text="{Binding Title}"
+                                               TextColor="Black" />
+
+                                        <Label FontSize="Small"
+                                               LineBreakMode="TailTruncation"
+                                               Text="{Binding Status}"
+                                               TextColor="DimGray" />
+
+                                        <Label FontSize="Small"
+                                               LineBreakMode="TailTruncation"
+                                               Text="{Binding ScanlationGroup}"
+                                               TextColor="DimGray" />
+                                    </VerticalStackLayout>
+
+                                    <Grid Grid.Row="1" ColumnDefinitions="*, auto">
+                                        <Label Grid.Column="0"
+                                               FontSize="Small"
+                                               LineBreakMode="TailTruncation"
+                                               Text="{Binding Chapter}"
+                                               TextColor="DimGray" />
+
+                                        <Label Grid.Column="1"
+                                               FontSize="Small"
+                                               Text="{Binding ReadableAt, Converter={converters:DateTimeToSinceConverter}}"
+                                               TextColor="DimGray" />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+    <!--  结束: 主内容  -->
+</ContentPage>

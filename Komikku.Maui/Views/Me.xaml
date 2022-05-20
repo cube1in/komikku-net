@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Komikku.Maui.Views.Me"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Komikku.Maui.ViewModels"
+             Title="我的"
+             x:DataType="viewModels:MeViewModel">
+
+    <VerticalStackLayout Margin="20">
+        <Grid Margin="0,0,0,30" ColumnDefinitions="*, auto">
+
+            <!--  认证栏  -->
+            <Label FontSize="Body"
+                   HorizontalOptions="Start"
+                   Text="{Binding AuthTabText}"
+                   TextColor="Black"
+                   VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LoginCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+        </Grid>
+
+        <Label Margin="0,0,0,30"
+               FontSize="Body"
+               HorizontalOptions="Start"
+               Text="漫画阅读设置"
+               TextColor="Black"
+               VerticalOptions="Center" />
+
+        <Label Grid.Row="1"
+               Margin="0,0,0,30"
+               FontSize="Body"
+               HorizontalOptions="Start"
+               Text="漫画下载设置"
+               TextColor="Black"
+               VerticalOptions="Center" />
+
+    </VerticalStackLayout>
+</ContentPage>
