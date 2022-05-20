@@ -172,11 +172,12 @@ public partial class LatestUpdateViewModel : BaseViewModel
         };
 
         var chapters = (await _chapterApi.GetChapterListAsync(chapterQuery))?.Data;
+        var distinctChapters = chapters?.DistinctBy(c => c.Relationships.First(r => r.Type == EntityType.Manga).Id);
 
-        var ids = (from chapter in chapters
+        var ids = (from chapter in distinctChapters
                    from relationship in chapter.Relationships
                    where relationship.Type == EntityType.Manga
-                   select relationship.Id).Distinct().ToArray();
+                   select relationship.Id).ToArray();
 
         var mangaQuery = new MangaListQuery
         {
@@ -188,14 +189,17 @@ public partial class LatestUpdateViewModel : BaseViewModel
 
         var mangaList = (await _mangaApi.GetMangaListAsync(mangaQuery))?.Data.ToList();
 
-        var list = ViewModelMapper.Map<IEnumerable<MangaForDisplay>>(chapters);
+        var list = ViewModelMapper.Map<IEnumerable<MangaForDisplay>>(distinctChapters);
         foreach (var item in list)
         {
             var manga = mangaList!.First(m => m.Id == item.Id);
             ViewModelMapper.Map(manga, item);
 
-            // Must to add, otherwise the ObservableCollection not change
-            MangaForDisplayList.Add(item);
+            if (MangaForDisplayList.All(m => m.Id != item.Id))
+            {
+                // Must to add, otherwise the ObservableCollection not change
+                MangaForDisplayList.Add(item);
+            }
         }
 
         _offset += _limit;
