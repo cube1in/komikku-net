@@ -3,7 +3,7 @@
 // ReSharper disable once CheckNamespace
 namespace Komikku.Kernel.Models;
 
-public class FeedQuery : NormalQuery
+public class FeedQuery : UsualQuery
 {
     [AliasAs("contentRating[]")]
     [Query(CollectionFormat.Multi)]

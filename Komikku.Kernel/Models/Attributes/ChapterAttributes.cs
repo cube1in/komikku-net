@@ -8,7 +8,7 @@ public class ChapterAttributes : AdditionalProperties
     /// 标题
     /// maxLength: 255
     /// </summary>
-    public string Title { get; set; } = null!;
+    public string? Title { get; set; }
 
     /// <summary>
     /// 发布时间

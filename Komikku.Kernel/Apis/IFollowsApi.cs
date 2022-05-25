@@ -38,7 +38,7 @@ public interface IFollowsApi
     /// <param name="query">Support Params: limit offset includes[]</param>
     /// <returns></returns>
     [Get("/user/follows/user")]
-    Task<UserListResponse?> GetLoggedUserFollowedUserList([Authorize] string token, IncludesQuery? query = null);
+    Task<UserListResponse?> GetUserFollowedUserListAsync([Authorize] string token, IncludesQuery? query = null);
 
     /// <summary>
     /// Check if logged User follows a User

@@ -3,7 +3,7 @@
 // ReSharper disable once CheckNamespace
 namespace Komikku.Kernel.Models;
 
-public class ChapterListQuery : NormalQuery
+public class ChapterListQuery : UsualQuery
 {
     [AliasAs("ids[]")]
     [Query(CollectionFormat.Multi)]
@@ -31,7 +31,7 @@ public class ChapterListQuery : NormalQuery
 
     [AliasAs("contentRating[]")]
     [Query(CollectionFormat.Multi)]
-    public ContentRating[]? ContentRatings { get; set; }
+    public ContentRating[]? ContentRating { get; set; }
 
     [AliasAs("order[")]
     public ChapterListOrder? Order { get; set; }

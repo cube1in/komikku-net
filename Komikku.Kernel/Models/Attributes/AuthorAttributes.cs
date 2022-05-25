@@ -16,7 +16,7 @@ public class AuthorAttributes : AdditionalProperties
     /// <summary>
     /// 图片地址
     /// </summary>
-    public string ImageUrl { get; set; } = null!;
+    public string? ImageUrl { get; set; }
 
     /// <summary>
     /// 传记

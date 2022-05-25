@@ -86,5 +86,5 @@ public class ScanlationGroupAttributes : AdditionalProperties
     /// example: "P4D"
     /// pattern: '^(P([1-9]|[1-9][0-9])D)?(P?([1-9])W)?(P?T(([1-9]|1[0-9]|2[0-4])H)?(([1-9]|[1-5][0-9]|60)M)?(([1-9]|[1-5][0-9]|60)S)?)?$'
     /// </summary>
-    public string PublishDelay { get; set; } = null!;
+    public string? PublishDelay { get; set; };
 }

@@ -3,7 +3,7 @@
 // ReSharper disable once CheckNamespace
 namespace Komikku.Kernel.Models;
 
-public class MangaFeedQuery : NormalQuery
+public class MangaFeedQuery : UsualQuery
 {
     [AliasAs("order[")]
     public MangaFeedOrder? Order { get; set; }

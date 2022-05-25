@@ -155,7 +155,7 @@ public partial class DetailsViewModel : BaseViewModel
     {
         var query = new MangaFeedQuery
         {
-            TranslatedLanguages = new[] { "zh", "zh-hk" },
+            TranslatedLanguage = new[] { "zh", "zh-hk" },
             Limit = 96,
             Offset = 0,
             Order = new MangaFeedOrder { Volume = OrderMode.Desc, Chapter = OrderMode.Desc },

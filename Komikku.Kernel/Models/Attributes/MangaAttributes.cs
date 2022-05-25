@@ -19,7 +19,7 @@ public class MangaAttributes : AdditionalProperties
     /// <summary>
     /// 替代标题
     /// </summary>
-    public IEnumerable<LocalizedString> AltTitles { get; set; } = null!;
+    public IEnumerable<LocalizedString>? AltTitles { get; set; }
 
     /// <summary>
     /// 描述
@@ -81,7 +81,7 @@ public class MangaAttributes : AdditionalProperties
     /// 漫画状态
     /// example: 漫画还在继续
     /// </summary>
-    public Status? Status { get; set; }
+    public Status Status { get; set; }
 
     /// <summary>
     /// 发行年份

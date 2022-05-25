@@ -39,19 +39,19 @@ public class MangaListQuery : IncludesQuery
 
     [AliasAs("originalLanguage[]")]
     [Query(CollectionFormat.Multi)]
-    public string[]? OriginalLanguages { get; set; }
+    public string[]? OriginalLanguage { get; set; }
 
     [AliasAs("excludedOriginalLanguage[]")]
     [Query(CollectionFormat.Multi)]
-    public string[]? ExcludedOriginalLanguages { get; set; }
+    public string[]? ExcludedOriginalLanguage { get; set; }
 
     [AliasAs("availableTranslatedLanguage[]")]
     [Query(CollectionFormat.Multi)]
-    public string[]? AvailableTranslatedLanguages { get; set; }
+    public string[]? AvailableTranslatedLanguage { get; set; }
 
     [AliasAs("publicationDemographic[]")]
     [Query(CollectionFormat.Multi)]
-    public PublicationDemographic[]? PublicationDemographics { get; set; }
+    public PublicationDemographic[]? PublicationDemographic { get; set; }
 
     [AliasAs("ids[]")]
     [Query(CollectionFormat.Multi)]

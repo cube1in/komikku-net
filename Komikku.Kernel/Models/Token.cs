@@ -8,7 +8,6 @@ public class Token
 {
     /// <summary>
     /// 有效期15分钟
-    /// 暂时没有用到，现在只保存 <see cref="Refresh"/>
     /// </summary>
     public string Session { get; set; } = null!;
 

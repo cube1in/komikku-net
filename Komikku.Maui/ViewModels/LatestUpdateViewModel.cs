@@ -165,8 +165,8 @@ public partial class LatestUpdateViewModel : BaseViewModel
         {
             Limit = _limit,
             Offset = _offset,
-            ContentRatings = new[] { ContentRating.Safe, ContentRating.Suggestive, ContentRating.Erotica, ContentRating.Pornographic },
-            TranslatedLanguages = new[] { "zh", "zh-hk" },
+            ContentRating = new[] { ContentRating.Safe, ContentRating.Suggestive, ContentRating.Erotica, ContentRating.Pornographic },
+            TranslatedLanguage = new[] { "zh", "zh-hk" },
             Includes = new[] { "manga", "scanlation_group" },
             Order = new ChapterListOrder { ReadableAt = OrderMode.Desc }
         };

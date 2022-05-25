@@ -3,19 +3,19 @@
 // ReSharper disable once CheckNamespace
 namespace Komikku.Kernel.Models;
 
-public class NormalQuery : AtSinceQuery
+public class UsualQuery : AtSinceQuery
 {
     [AliasAs("translatedLanguage[]")]
     [Query(CollectionFormat.Multi)]
-    public string[]? TranslatedLanguages { get; set; }
+    public string[]? TranslatedLanguage { get; set; }
 
     [AliasAs("originalLanguage[]")]
     [Query(CollectionFormat.Multi)]
-    public string[]? OriginalLanguages { get; set; }
+    public string[]? OriginalLanguage { get; set; }
 
     [AliasAs("excludedOriginalLanguage[]")]
     [Query(CollectionFormat.Multi)]
-    public string[]? ExcludedOriginalLanguages { get; set; }
+    public string[]? ExcludedOriginalLanguage { get; set; }
 
     [AliasAs("excludedGroups[]")]
     [Query(CollectionFormat.Multi)]
